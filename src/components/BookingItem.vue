@@ -1,11 +1,7 @@
 <template>
-  <RoundedCard>
-    <div class="p-4">
-      Booking to Vue Conference
-    </div>
-  </RoundedCard>
+  <SectionedCard> Booking to Vue Conference </SectionedCard>
 </template>
 
 <script setup>
-import RoundedCard from '@/components/RoundedCard.vue';
+import SectionedCard from '@/components/SectionedCard.vue';
 </script>
