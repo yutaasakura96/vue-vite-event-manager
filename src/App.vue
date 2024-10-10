@@ -8,13 +8,18 @@
         :key="i"
         title="Vue Conference 2024"
         when="2024-05-01"
-        description="Conference about Vue and Javascript" @register="console.log('Registered');"
+        description="Conference about Vue and Javascript"
+        @register="console.log('Registered')"
       />
     </section>
     <h2 class="text-2xl font-medium">Your Bookings</h2>
+    <section class="grid grid-cols-1 gap-4">
+      <BookingItem v-for="i in 3" :key="i" />
+    </section>
   </main>
 </template>
 
 <script setup>
 import EventCard from '@/components/EventCard.vue';
+import BookingItem from '@/components/BookingItem.vue';
 </script>
