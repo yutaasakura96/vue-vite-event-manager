@@ -1,13 +1,16 @@
 <template>
   <SectionedCard>
     <div class="flex justify-between">
-      <div>Booking to Vue Conference</div>
+      <div>{{ title }}</div>
       <RoundButton variant="danger">Cancel</RoundButton>
     </div>
   </SectionedCard>
 </template>
 
 <script setup>
-import SectionedCard from '@/components/SectionedCard.vue';
+defineProps({
+  title: String
+});
+import SectionedCard from '@/components/SectionCard.vue';
 import RoundButton from '@/components/RoundButton.vue';
 </script>
