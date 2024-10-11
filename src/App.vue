@@ -21,12 +21,13 @@
 
     <h2 class="text-2xl font-medium">Your Bookings</h2>
     <section class="grid grid-cols-1 gap-4">
-      <template v-if="!eventsLoading">
+      <template v-if="!bookingsLoading">
         <BookingItem
           v-for="booking in bookings"
           :key="booking.id"
           :title="booking.eventTitle"
           :status="booking.status"
+          @cancelled="cancelBooking(booking.id)"
         />
       </template>
 
@@ -50,6 +51,7 @@ const eventsLoading = ref(false);
 const bookings = ref([]);
 const bookingsLoading = ref(false);
 
+// Fetch events from mock API
 const fetchEvents = async () => {
   eventsLoading.value = true;
   try {
@@ -60,6 +62,7 @@ const fetchEvents = async () => {
   }
 };
 
+// Fetch bookings from mock API
 const fetchBookings = async () => {
   bookingsLoading.value = true;
   try {
@@ -70,7 +73,19 @@ const fetchBookings = async () => {
   }
 };
 
+const findBookingById = (id) => {
+  return bookings.value.findIndex((booking) => booking.id === id);
+};
+
+// Handle user registration for an event
 const handleRegistration = async (event) => {
+  // Check if the user is already registered for this event
+  if (bookings.value.some((booking) => booking.eventId === event.id && booking.userId === 1)) {
+    alert('You already registered for this event');
+    return;
+  }
+
+  // Prepare the new booking object
   const newBooking = {
     id: Date.now().toString(),
     userId: 1,
@@ -79,11 +94,10 @@ const handleRegistration = async (event) => {
     status: 'pending'
   };
 
+  // Push the new booking before confirmation (optimistic UI)
   bookings.value.push(newBooking);
-  if (bookings.value.some((booking) => booking.eventId === event.id && booking.userId === 1)) {
-    alert('You already registered for this event');
-    return;
-  }
+
+  // Try registering the booking on the server
   try {
     const response = await fetch('http://localhost:3001/bookings', {
       method: 'POST',
@@ -94,16 +108,38 @@ const handleRegistration = async (event) => {
       })
     });
 
+    // Handle successful booking confirmation
     if (response.ok) {
-      const index = bookings.value.findIndex((booking) => booking.id === newBooking.id);
+      const index = findBookingById(newBooking.id);
 
+      // Replace pending booking with confirmed one
       bookings.value[index] = await response.json();
     } else {
       throw new Error('Failed to confirm booking');
     }
   } catch (error) {
-    console.error('Failed to register for event: ', error);
-    bookings.value = bookings.value.filter((booking) => booking.id !== booking.id);
+    console.error('Failed to register for event:', error);
+    // Remove the pending booking if the request fails
+    bookings.value = bookings.value.filter((booking) => booking.id !== newBooking.id);
+  }
+};
+
+const cancelBooking = async (bookingId) => {
+  const index = findBookingById(bookingId);
+  const originalBooking = bookings.value[index];
+  bookings.value.splice(index, 1);
+
+  try {
+    const response = await fetch(`http://localhost:3001/bookings/${bookingId}`, {
+      method: 'DELETE'
+    });
+
+    if (!response.ok) {
+      throw new Error('Booking could not be cancelled.');
+    }
+  } catch (error) {
+    console.error('Failed to cancel booking:', error);
+    bookings.value.splice(index, 0, originalBooking);
   }
 };
 
