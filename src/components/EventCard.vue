@@ -6,7 +6,7 @@
       <div class="space-y-4">
         <p>{{ description }}</p>
         <div class="flex justify-end">
-          <RoundButton @click="$emit('register')"> Registered </RoundButton>
+          <RoundButton @click="$emit('register')"> Register </RoundButton>
         </div>
       </div>
     </template>
