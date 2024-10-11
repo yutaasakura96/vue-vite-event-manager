@@ -14,7 +14,7 @@
 </template>
 
 <script setup>
-import SectionedCard from '@/components/SectionedCard.vue';
+import SectionedCard from '@/components/SectionCard.vue';
 import RoundButton from '@/components/RoundButton.vue';
 defineProps({
   title: String,
