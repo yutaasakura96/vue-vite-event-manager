@@ -29,13 +29,5 @@
       "location": "Convention Center, Downtown"
     }
   ],
-  "bookings": [
-    {
-      "id": "1728706226720",
-      "userId": 1,
-      "eventId": "1",
-      "eventTitle": "Rails Conference 2024",
-      "status": "confirmed"
-    }
-  ]
+  "bookings": []
 }

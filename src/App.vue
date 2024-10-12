@@ -6,7 +6,7 @@
 
     <h2 class="text-2xl font-medium">Your Bookings</h2>
     <section class="grid grid-cols-1 gap-4">
-      <template v-if="!bookingsLoading">
+      <template v-if="!loading">
         <BookingItem
           v-for="booking in bookings"
           :key="booking.id"
@@ -24,25 +24,14 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { onMounted } from 'vue';
 
 import BookingItem from '@/components/BookingItem.vue';
 import LoadingBookingItem from '@/components/LoadingBookingItem.vue';
 import EventList from '@/components/EventList.vue';
+import useBookings from '@/composables/useBookings';
 
-const bookings = ref([]);
-const bookingsLoading = ref(false);
-
-// Fetch bookings from mock API
-const fetchBookings = async () => {
-  bookingsLoading.value = true;
-  try {
-    const response = await fetch('http://localhost:3001/bookings');
-    bookings.value = await response.json();
-  } finally {
-    bookingsLoading.value = false;
-  }
-};
+const { bookings, loading, fetchBookings } = useBookings();
 
 const findBookingById = (id) => {
   return bookings.value.findIndex((booking) => booking.id === id);
