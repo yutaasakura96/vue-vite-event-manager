@@ -17,7 +17,7 @@
             :title="event.title"
             :when="event.date"
             :description="event.description"
-            @register="$emit('register', event)"
+            @register="$emit(handleRegistration(event))"
           />
         </template>
         <template v-else>
@@ -35,8 +35,6 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 
-defineEmits(['register']);
-
 const events = ref([]);
 const loading = ref(false);
 const error = ref(null);
@@ -45,6 +43,9 @@ import EventCard from '@/components/EventCard.vue';
 import LoadingEventCard from '@/components/LoadingEventCard.vue';
 import SectionCard from '@/components/SectionCard.vue';
 import RoundButton from '@/components/RoundButton.vue';
+import useBookings from '@/composables/useBookings';
+
+const { handleRegistration } = useBookings();
 
 // Fetch events from mock API
 const fetchEvents = async () => {
