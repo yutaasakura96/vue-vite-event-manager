@@ -1,5 +1,5 @@
 <template>
-  <SectionedCard>
+  <SectionCard>
     <template #header>{{ title }}</template>
     {{ when }}
     <template #footer>
@@ -10,11 +10,11 @@
         </div>
       </div>
     </template>
-  </SectionedCard>
+  </SectionCard>
 </template>
 
 <script setup>
-import SectionedCard from '@/components/SectionCard.vue';
+import SectionCard from '@/components/SectionCard.vue';
 import RoundButton from '@/components/RoundButton.vue';
 defineProps({
   title: String,
