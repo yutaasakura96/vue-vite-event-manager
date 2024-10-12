@@ -1,11 +1,8 @@
 <template>
   <template v-if="error">
-    <SectionCard>
-      <div class="space-y-4 items-center flex flex-col">
-        <div class="text-red-500">Could not load Events at the moment. Please try again.</div>
-        <RoundButton @click="fetchEvents"> Retry Now </RoundButton>
-      </div>
-    </SectionCard>
+    <ErrorCard :retry="fetchEvents"
+      >Could not load Events at the moment. Please try again.</ErrorCard
+    >
   </template>
   <template v-else>
     <section class="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -17,7 +14,7 @@
             :title="event.title"
             :when="event.date"
             :description="event.description"
-            @register="$emit('register', event)"
+            @register="$emit(handleRegistration(event))"
           />
         </template>
         <template v-else>
@@ -35,16 +32,16 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 
-defineEmits(['register']);
-
 const events = ref([]);
 const loading = ref(false);
 const error = ref(null);
 
 import EventCard from '@/components/EventCard.vue';
 import LoadingEventCard from '@/components/LoadingEventCard.vue';
-import SectionCard from '@/components/SectionCard.vue';
-import RoundButton from '@/components/RoundButton.vue';
+import ErrorCard from '@/components/ErrorCard.vue';
+import useBookings from '@/composables/useBookings';
+
+const { handleRegistration } = useBookings();
 
 // Fetch events from mock API
 const fetchEvents = async () => {
