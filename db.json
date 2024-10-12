@@ -31,14 +31,7 @@
   ],
   "bookings": [
     {
-      "id": "1728693290077",
-      "userId": 1,
-      "eventId": "1",
-      "eventTitle": "Rails Conference 2024",
-      "status": "confirmed"
-    },
-    {
-      "id": "1728696842394",
+      "id": "1728706226720",
       "userId": 1,
       "eventId": "1",
       "eventTitle": "Rails Conference 2024",
