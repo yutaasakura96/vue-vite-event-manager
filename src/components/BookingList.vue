@@ -1,37 +1,26 @@
 <template>
-  <template v-if="error">
-    <ErrorCard :retry="fetchBookings"
-      >Could not load Bookings at the moment. Please try again.</ErrorCard
-    >
-  </template>
-  <templat v-else>
-    <section class="grid grid-cols-1 gap-4">
-      <template v-if="!loading">
-        <BookingItem
-          v-for="booking in bookings"
-          :key="booking.id"
-          :title="booking.eventTitle"
-          :status="booking.status"
-          @cancelled="cancelBooking(booking.id)"
-        />
-      </template>
-      <template v-else>
-        <LoadingBookingItem v-for="i in 4" :key="i" />
-      </template>
-    </section>
-  </templat>
+  <section class="grid grid-cols-1 gap-4">
+    <!-- If there are bookings -->
+    <template v-if="bookings.length > 0">
+      <BookingItem
+        v-for="booking in bookings"
+        :key="booking.id"
+        :title="booking.eventTitle"
+        :status="booking.status"
+        @cancelled="cancelBooking(booking.id)"
+      />
+    </template>
+
+    <!-- If there are no bookings -->
+    <template v-else>
+      <div class="text-center text-gray-500">No bookings yet.</div>
+    </template>
+  </section>
 </template>
-
 <script setup>
-import { onMounted } from 'vue';
 import BookingItem from '@/components/BookingItem.vue';
-import LoadingBookingItem from '@/components/LoadingBookingItem.vue';
 import useBookings from '@/composables/useBookings';
-import ErrorCard from '@/components/ErrorCard.vue';
 
-const { bookings, loading, fetchBookings, cancelBooking, error } = useBookings();
-
-onMounted(() => {
-  fetchBookings();
-});
+// Import the `useBookings` composable to manage bookings
+const { bookings, cancelBooking } = useBookings();
 </script>
