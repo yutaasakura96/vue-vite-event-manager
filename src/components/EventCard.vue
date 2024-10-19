@@ -2,10 +2,7 @@
   <SectionCard>
     <template #header>
       <slot name="header">
-        <h2 class="hover:text-blue-300 flex gap-2">
-          <a :href="url" target="_blank">{{ title }}</a>
-          <Link />
-        </h2>
+        <h2>{{ title }}</h2>
         <p>{{ when }}</p>
       </slot>
     </template>
@@ -29,7 +26,10 @@
         <div class="space-y-4">
           <img :src="image" alt="Event Image" class="w-full h-80 object-fit" />
           <p>{{ description }}</p>
-          <div class="flex justify-end">
+          <div class="flex gap-5 justify-end">
+            <RoundButton @click="$emit('information')"
+              >More Information</RoundButton
+            >
             <RoundButton @click="$emit('register')">Register</RoundButton>
           </div>
         </div>
@@ -41,7 +41,7 @@
 <script setup>
 import SectionCard from '@/components/SectionCard.vue';
 import RoundButton from '@/components/RoundButton.vue';
-import { MapPin, Link } from 'lucide-vue-next';
+import { MapPin } from 'lucide-vue-next';
 
 defineProps({
   title: String,
@@ -52,5 +52,5 @@ defineProps({
   image: String
 });
 
-defineEmits(['register']);
+defineEmits(['register', 'information']);
 </script>

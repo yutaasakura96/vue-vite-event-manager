@@ -76,6 +76,15 @@ const cancelBooking = (bookingId) => {
   }
 };
 
+// Handle opening an external URL
+const openUrl = (url) => {
+  if (url) {
+    window.open(url, '_blank'); // Open the URL in a new tab
+  } else {
+    alert('No URL provided');
+  }
+};
+
 // Mount the hook to fetch bookings when the component is mounted
 export default function useBookings() {
   onMounted(() => {
@@ -88,6 +97,7 @@ export default function useBookings() {
     error,
     fetchBookings,
     handleRegistration,
-    cancelBooking
+    cancelBooking,
+    openUrl // Return openUrl so it can be used in the components
   };
 }

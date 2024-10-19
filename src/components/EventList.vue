@@ -18,6 +18,7 @@
             :url="event.url"
             :image="event.image"
             @register="$emit(handleRegistration(event))"
+            @information="$emit(openUrl(event.url))"
           />
         </template>
         <template v-else>
@@ -44,7 +45,7 @@ import LoadingEventCard from '@/components/LoadingEventCard.vue';
 import ErrorCard from '@/components/ErrorCard.vue';
 import useBookings from '@/composables/useBookings';
 
-const { handleRegistration } = useBookings();
+const { handleRegistration, openUrl } = useBookings();
 
 // // Fetch events from mock API
 // const fetchEvents = async () => {
