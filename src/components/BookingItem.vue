@@ -4,7 +4,12 @@
       <div class="flex space-x-2">
         <div>{{ title }}</div>
         <div>
-          <component :is="icon" :class="pending ? 'animate-spin' : ''" />
+          <component
+            :is="icon"
+            :class="[
+              pending ? 'animate-spin text-blue-500' : 'text-green-500'
+            ]"
+          />
         </div>
       </div>
       <RoundButton variant="danger" @click="$emit('cancelled')">Cancel</RoundButton>
