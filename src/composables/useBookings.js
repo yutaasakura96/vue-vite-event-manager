@@ -1,16 +1,26 @@
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 
 const bookings = ref([]);
 const loading = ref(false);
 const error = ref(null);
 
-// Fetch bookings from mock API
-const fetchBookings = async () => {
+// Fetch bookings from local storage with error handling
+const fetchBookings = () => {
   loading.value = true;
   error.value = null;
+
   try {
-    const response = await fetch('http://localhost:3001/bookings');
-    bookings.value = await response.json();
+    const storedBookings = localStorage.getItem('bookings');
+    if (storedBookings) {
+      try {
+        bookings.value = JSON.parse(storedBookings);
+      } catch (parseError) {
+        error.value = new Error('Failed to parse bookings from local storage.');
+        bookings.value = [];
+      }
+    } else {
+      bookings.value = [];
+    }
   } catch (e) {
     error.value = e;
   } finally {
@@ -18,19 +28,19 @@ const fetchBookings = async () => {
   }
 };
 
+// Helper function to find a booking by its ID
 const findBookingById = (id) => {
   return bookings.value.findIndex((booking) => booking.id === id);
 };
 
 // Handle user registration for an event
-const handleRegistration = async (event) => {
-  // Check if the user is already registered for this event
+const handleRegistration = (event) => {
   if (bookings.value.some((booking) => booking.eventId === event.id && booking.userId === 1)) {
-    alert('You already registered for this event');
+    alert('You are already registered for this event.');
     return;
   }
 
-  // Prepare the new booking object
+  // Prepare the new booking object with a "pending" status
   const newBooking = {
     id: Date.now().toString(),
     userId: 1,
@@ -39,56 +49,39 @@ const handleRegistration = async (event) => {
     status: 'pending'
   };
 
-  // Push the new booking before confirmation (optimistic UI)
   bookings.value.push(newBooking);
 
-  // Try registering the booking on the server
-  try {
-    const response = await fetch('http://localhost:3001/bookings', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        ...newBooking,
-        status: 'confirmed'
-      })
-    });
+  localStorage.setItem('bookings', JSON.stringify(bookings.value));
 
-    // Handle successful booking confirmation
-    if (response.ok) {
-      const index = findBookingById(newBooking.id);
+  // Simulate a delay before confirming the booking
+  setTimeout(() => {
+    const index = findBookingById(newBooking.id);
+    if (index !== -1) {
+      bookings.value[index].status = 'confirmed';
 
-      // Replace pending booking with confirmed one
-      bookings.value[index] = await response.json();
-    } else {
-      throw new Error('Failed to confirm booking');
+      localStorage.setItem('bookings', JSON.stringify(bookings.value));
     }
-  } catch (error) {
-    console.error('Failed to register for event:', error);
-    // Remove the pending booking if the request fails
-    bookings.value = bookings.value.filter((booking) => booking.id !== newBooking.id);
-  }
+  }, 3000);
 };
 
-const cancelBooking = async (bookingId) => {
+// Handle booking cancellation
+const cancelBooking = (bookingId) => {
   const index = findBookingById(bookingId);
-  const originalBooking = bookings.value[index];
-  bookings.value.splice(index, 1);
 
-  try {
-    const response = await fetch(`http://localhost:3001/bookings/${bookingId}`, {
-      method: 'DELETE'
-    });
-
-    if (!response.ok) {
-      throw new Error('Booking could not be cancelled.');
-    }
-  } catch (error) {
-    console.error('Failed to cancel booking:', error);
-    bookings.value.splice(index, 0, originalBooking);
+  if (index !== -1) {
+    bookings.value.splice(index, 1);
+    localStorage.setItem('bookings', JSON.stringify(bookings.value));
+  } else {
+    alert('Booking not found.');
   }
 };
 
+// Mount the hook to fetch bookings when the component is mounted
 export default function useBookings() {
+  onMounted(() => {
+    fetchBookings();
+  });
+
   return {
     bookings,
     loading,

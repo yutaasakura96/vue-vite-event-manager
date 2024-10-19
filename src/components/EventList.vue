@@ -93,7 +93,6 @@ const fetchEvents = async () => {
       .filter((event) => {
         // Only keep events with unique locations
         if (seenLocations.has(event.location)) {
-          // Filter out if location is already seen
           return false;
         } else {
           // Track the location
