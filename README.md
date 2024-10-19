@@ -45,7 +45,7 @@ This project utilizes a combination of modern tools, frameworks, and libraries t
 - 💾 **LocalStorage:** Provides persistent storage for user bookings across browser sessions.
 - 🧩 **[Radix Vue](https://radix-vue.com/):** A component library that helps with building accessible, high-quality UI elements.
 - 🖼️ **[Lucide Icons](https://lucide.dev/):** A library of beautiful and customizable icons used throughout the app.
-- 
+
 ## 🗂️ Project Structure
 
 The project's structure is organized into components, composables, and the main application file:
