@@ -2,6 +2,10 @@
 
 The **Vue Event Booking Manager** is a Vue.js fictional personal booking manager web application that allows users to browse available events coming from the Ticketmaster Discovery API and manage their bookings. It provides a simple interface where users can register for events, view their bookings, and cancel bookings as needed.
 
+## 🚀 Live DEMO
+
+Check out the live demo of the project here: [Live DEMO](https://vue-vite-event-bookin-manager-9wejnfbmm-yuta-asakuras-projects.vercel.app/) 
+
 ## 📖 Table of Contents
 
 - [Features](#features)
