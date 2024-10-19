@@ -98,6 +98,6 @@ export default function useBookings() {
     fetchBookings,
     handleRegistration,
     cancelBooking,
-    openUrl // Return openUrl so it can be used in the components
+    openUrl
   };
 }

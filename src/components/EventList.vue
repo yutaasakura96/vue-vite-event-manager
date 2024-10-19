@@ -16,6 +16,8 @@
               :location="event.location"
               :url="event.url"
               :image="event.image"
+              @register="handleRegistration(event)"
+              @information="openUrl(event.url)"
             />
           </template>
           <template v-else>
@@ -43,6 +45,9 @@ import EventCard from '@/components/EventCard.vue';
 import LoadingEventCard from '@/components/LoadingEventCard.vue';
 import ErrorCard from '@/components/ErrorCard.vue';
 import PaginationComponent from '@/components/PaginationComponent.vue';
+import useBookings from '@/composables/useBookings';
+
+const { openUrl, handleRegistration } = useBookings();
 
 const events = ref([]);
 const loading = ref(false);
@@ -69,7 +74,7 @@ const fetchEvents = async (page = 1) => {
         id: event.id,
         title: event.name,
         date: event.dates.start.localDate,
-        description: event.info,
+        description: event.info || 'No Event description available',
         location: event._embedded.venues[0].name,
         image: event.images[0]?.url,
         url: event.url,

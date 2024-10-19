@@ -21,7 +21,7 @@
       <template v-for="(page, index) in items" :key="index">
         <PaginationListItem
           v-if="page.type === 'page'"
-          class="w-12 h-9 border rounded hover:bg-white/10 transition"
+          class="w-12 h-9 border rounded data-[selected]:bg-white data-[selected]:text-blackA11 hover:bg-white/10 transition focus-within:outline focus-within:outline-1 focus-within:outline-offset-1"
           :value="page.value"
           @click="$emit('changePage', page.value)"
         >
