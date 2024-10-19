@@ -37,6 +37,7 @@ This project utilizes a combination of modern tools, frameworks, and libraries t
 
 - 🌐 **[Vue 3](https://vuejs.org/):** The progressive JavaScript framework used for building the app's UI.
 - ⚡ **[Vite](https://vitejs.dev/):** A fast and modern build tool that provides a lightning-fast development environment.
+- 🌍 **[Vercel](https://vercel.com/):** Deployment platform for hosting the project with automatic builds and easy integration.
 - 🎨 **[Tailwind CSS](https://tailwindcss.com/):** A utility-first CSS framework that enables rapid UI development with a consistent design system.
 - ✨ **[Prettier](https://prettier.io/):** A code formatter used to enforce a consistent code style throughout the project.
 - 🔍 **[ESLint](https://eslint.org/):** A linter tool for identifying and fixing code quality issues.
@@ -44,6 +45,7 @@ This project utilizes a combination of modern tools, frameworks, and libraries t
 - 💾 **LocalStorage:** Provides persistent storage for user bookings across browser sessions.
 - 🧩 **[Radix Vue](https://radix-vue.com/):** A component library that helps with building accessible, high-quality UI elements.
 - 🖼️ **[Lucide Icons](https://lucide.dev/):** A library of beautiful and customizable icons used throughout the app.
+- 
 ## 🗂️ Project Structure
 
 The project's structure is organized into components, composables, and the main application file:
@@ -104,6 +106,34 @@ Once the app is running, users can:
 - Register for events: Add event registrations, which are saved locally.
 - View bookings: See all booked events in a clean, organized list.
 - Cancel bookings: Remove bookings easily by clicking the cancel button.
+
+# 🌍 Deployment
+
+This project has been deployed on Vercel.
+
+You can view the live project here (replace with your actual Vercel deployment URL).
+
+To deploy this project on Vercel, follow these steps:
+
+1.	Build the Project:
+```ssh
+npm run build
+```
+2.	Push to GitHub or GitLab: Ensure your project is pushed to a repository.
+3.	Connect to Vercel:
+- Go to Vercel.
+- Connect your repository.
+- Vercel will automatically detect the project as a Vite-based Vue.js app.
+4.	Set the Build Command:
+```ssh
+npm run build
+```
+
+5.	Set the Output Directory:
+```ssh
+dist
+```
+6.	Deploy: Click deploy, and Vercel will handle the rest.
 
 # 💻 Recommended IDE Setup
 
