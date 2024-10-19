@@ -25,6 +25,7 @@
       <slot name="footer">
         <div class="space-y-4">
           <img :src="image" alt="Event Image" class="w-full h-80 object-fit" />
+          <h2 class="text-lg font-bold">Event Description</h2>
           <p>{{ description }}</p>
           <div class="flex gap-5 justify-end">
             <RoundButton @click="$emit('information')"
